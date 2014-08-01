@@ -1,6 +1,8 @@
 fs = require 'fs'
 path = require 'path'
 
+INDENTATION_AMOUNT = 2
+
 filename = path.resolve process.cwd(), process.argv[2]
 console.log filename
 
@@ -18,11 +20,15 @@ indent = (d) ->
 
 compile = (content) ->
   content = content.replace /\n[\t ]*\n/g, "\n\n"
-  content = content.replace /\t/g, "    "
+  content = content.replace /\t/g, new Array(INDENTATION_AMOUNT + 1).join(" ")
   lines = content.split /\n/
   lines = lines.map (line) ->
     matches = line.match /^([\t  ]*)(.*)$/
-    [(matches[1]?.length ? 0) / 2, matches[2]]
+    [(matches[1]?.length ? 0) / INDENTATION_AMOUNT, matches[2]]
+
+  firstLine = findNextLine(lines, -1)
+  unless firstLine[0] is 0
+    throw new Error "Invalid initial indentation in #{filename}: first line must not be indented"
 
   depth = 0
   output = []
@@ -32,7 +38,7 @@ compile = (content) ->
       depth--
       output.push "#{indent(depth)}}"
     if line[0] > depth + 1
-      throw new Error "Invalid indentation"
+      throw new Error "Invalid indentation increase (#{(line[0] - depth) * INDENTATION_AMOUNT} spaces) on line #{i+1} of #{filename}: must indent by exactly two spaces at each level"
     depth = line[0]
 
     suffix =
@@ -53,8 +59,11 @@ compile = (content) ->
 
 recompile = ->
   content = fs.readFileSync(filename, 'utf8')
-  output = compile(content)
-  fs.writeFileSync(filename.replace(/\.sscad$/, ".scad"), output)
+  try
+    output = compile(content)
+    fs.writeFileSync(filename.replace(/\.sscad$/, ".scad"), output)
+  catch e
+    console.log e.message
 
 fs.watch filename, recompile
 recompile()
