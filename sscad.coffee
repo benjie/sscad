@@ -8,11 +8,14 @@ if argv[2] is "-w"
   watch = true
   argv.splice(2, 1)
 
-filename = path.resolve process.cwd(), argv[2]
-
-unless filename?.match /\.sscad$/
+usage = ->
   console.log "Usage: coffee sscad.coffee [-w] <filename.sscad>"
   process.exit 1
+
+usage() unless argv.length > 2
+
+filename = path.resolve process.cwd(), argv[2]
+usage() unless filename?.match /\.sscad$/
 
 findNextLine = (lines, start) ->
   for line, i in lines when i > start
