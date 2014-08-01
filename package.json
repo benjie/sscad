@@ -1,0 +1,23 @@
+{
+  "name": "sscad",
+  "version": "0.0.1",
+  "description": "OpenSCAD alternative syntax",
+  "main": "sscad.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benjie/sscad.git"
+  },
+  "keywords": [
+    "OpenSCAD",
+    "SCAD"
+  ],
+  "author": "Benjie Gillam <benjie@jemjie.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjie/sscad/issues"
+  },
+  "homepage": "https://github.com/benjie/sscad"
+}
