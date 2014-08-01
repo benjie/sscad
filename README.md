@@ -11,10 +11,15 @@ syntax for OpenSCAD that takes a `.sscad` file and compiles it to
 The aim of this project is "sSCAD is to SCAD as CoffeeScript is to
 JavaScript" - i.e. "It's just SCAD"
 
+Installation
+------------
+
+    npm install -g sscad
+
 Usage
 -----
 
-    coffee sscad.coffee [-w] <filename.sscad>
+    sscad [-w] <filename.sscad>
 
 (Add `-w` to watch for changes and recompile as necessary.)
 
