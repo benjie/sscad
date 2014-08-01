@@ -7,7 +7,7 @@
     "sscad": "sscad.js"
   },
   "scripts": {
-    "prepublish": "./node_modules/.bin/coffee -c sscad.coffee",
+    "prepublish": "./node_modules/.bin/coffee -c sscad.coffee && (echo '#!/usr/bin/env node'; cat sscad.js) > tmp && mv tmp sscad.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
