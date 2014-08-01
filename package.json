@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "OpenSCAD alternative syntax",
   "main": "sscad.js",
+  "bin": {
+    "sscad": "sscad.js"
+  },
   "scripts": {
+    "prepublish": "./node_modules/.bin/coffee -c sscad.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/benjie/sscad/issues"
   },
-  "homepage": "https://github.com/benjie/sscad"
+  "homepage": "https://github.com/benjie/sscad",
+  "devDependencies": {
+    "coffee-script": "^1.7.1"
+  }
 }
