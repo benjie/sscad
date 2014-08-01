@@ -3,11 +3,15 @@ path = require 'path'
 
 INDENTATION_AMOUNT = 2
 
-filename = path.resolve process.cwd(), process.argv[2]
-console.log filename
+argv = process.argv[..]
+if argv[2] is "-w"
+  watch = true
+  argv.splice(2, 1)
+
+filename = path.resolve process.cwd(), argv[2]
 
 unless filename?.match /\.sscad$/
-  console.log "Usage: coffee sscad.coffee <filename.sscad>"
+  console.log "Usage: coffee sscad.coffee [-w] <filename.sscad>"
   process.exit 1
 
 findNextLine = (lines, start) ->
@@ -65,5 +69,6 @@ recompile = ->
   catch e
     console.log e.message
 
-fs.watch filename, recompile
 recompile()
+if watch
+  fs.watch filename, recompile
